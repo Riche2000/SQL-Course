@@ -86,3 +86,21 @@ SELECT staff_id, customer_id, SUM(amount) FROM payment GROUP BY staff_id,custome
 
 SELECT DATE(payment_date), SUM(amount) FROM payment GROUP BY DATE(payment_date)
 SELECT DATE(payment_date), SUM(amount) FROM payment GROUP BY DATE(payment_date) ORDER BY SUM(amount)
+
+SELECT staff_id, COUNT(*) FROM payment GROUP BY staff_id
+SELECT rating, ROUND(AVG(replacement_cost),2) FROM film GROUP BY rating
+SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id ORDER BY SUM(amount) DESC LIMIT 5
+
+--HAVING
+SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id
+SELECT customer_id, SUM(amount) FROM payment WHERE customer_id NOT IN (184,87,477) GROUP BY customer_id
+SELECT customer_id, SUM(amount) FROM payment GROUP BY customer_id HAVING SUM(amount)>100
+
+SELECT store_id, COUNT(customer_id) FROM customer GROUP BY store_id
+SELECT store_id, COUNT(*) FROM customer GROUP BY store_id HAVING COUNT(*) > 300
+SELECT store_id, COUNT(customer_id) FROM customer GROUP BY store_id HAVING COUNT(customer_id) > 300
+
+--CLIENTES QUE TIENEN MÁS DE 40 TRANSACCIONES
+SELECT customer_id, COUNT(payment_id) FROM payment GROUP BY customer_id HAVING COUNT(payment_id) > 39
+--CLIENTES QUE HAYAN COMPRADO AL MENOS $100 CON EL STAFF 2
+SELECT customer_id, staff_id, SUM(amount) FROM payment WHERE staff_id='2' GROUP BY customer_id, staff_id HAVING SUM(amount) > 100
